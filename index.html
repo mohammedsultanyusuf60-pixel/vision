@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="am" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision Language School of English | Kemissie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans Ethiopic', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Noto+Sans+Ethiopic:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', 'Noto Sans Ethiopic', sans-serif; }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .pulse-ring { animation: pulse-ring 1.5s infinite; }
+        @media print {
+            body * { visibility: hidden; }
+            #printableCertificateArea, #printableCertificateArea * { visibility: visible; }
+            #printableCertificateArea { position: fixed; left: 0; top: 0; width: 100%; margin: 0; padding: 20px; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300">
+
+    <!-- Toast Notification -->
+    <div id="toastBox" class="fixed top-20 right-4 z-50 hidden max-w-sm bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 text-sm font-bold"></div>
+
+    <!-- Floating Telegram & WhatsApp Chat Buttons -->
+    <div class="fixed bottom-5 left-5 z-40 flex flex-col gap-2.5">
+        <a href="https://t.me/+251919466511" target="_blank" class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs shadow-xl transition transform hover:scale-105">
+            <span>✈️</span> <span data-i18n="chat_tg">Telegram መልዕክት</span>
+        </a>
+        <a href="https://wa.me/251919466511" target="_blank" class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs shadow-xl transition transform hover:scale-105">
+            <span>💬</span> <span data-i18n="chat_wa">WhatsApp መልዕክት</span>
+        </a>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2">
+            <a href="#" class="flex items-center gap-2.5">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-700 flex items-center justify-center text-white font-black text-xl shadow-md">V</div>
+                <div>
+                    <h1 class="font-black text-sm sm:text-base leading-tight text-slate-900 dark:text-white">Vision Language School</h1>
+                    <p class="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400">Of English • Kemissie</p>
+                </div>
+            </a>
+
+            <div class="flex items-center gap-2">
+                <!-- Full Website Language Toggle -->
+                <button onclick="toggleLanguage()" id="langBtn" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 text-xs font-extrabold border border-slate-200 dark:border-slate-700 transition">
+                    🌐 English
+                </button>
+
+                <!-- Dark Mode Toggle -->
+                <button onclick="toggleDarkMode()" id="themeBtn" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm transition" aria-label="Theme">
+                    🌙
+                </button>
+
+                <!-- Student Login / Profile Button -->
+                <button onclick="openAuthModal('student')" id="navStudentBtn" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold shadow-sm transition">
+                    🔐 <span data-i18n="btn_login">ይግቡ / Login</span>
+                </button>
+
+                <!-- Admin Dashboard Button with Pending Notification Badge -->
+                <button onclick="openAuthModal('admin')" class="relative px-3.5 py-2 rounded-xl bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white text-xs font-extrabold border border-slate-700 transition">
+                    🛡️ Admin
+                    <span id="adminPendingBadge" class="hidden absolute -top-2 -right-2 w-5 h-5 rounded-full bg-rose-600 text-white text-[10px] font-black flex items-center justify-center shadow">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 text-white py-14 sm:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-10 items-center">
+            <div class="space-y-6">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-amber-300 text-xs font-bold">
+                    <span>📍</span> <span data-i18n="hero_loc">ከሚሴ ከተማ፣ ውሃ ልማት ፊት ለፊት (Kemissie)</span>
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-black leading-tight" data-i18n="hero_title">
+                    እንግሊዝኛን ከፊደል <span class="text-amber-400">'A'</span> ጀምረው አቀላጥፈው ይናገሩ!
+                </h2>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed" data-i18n="hero_desc">
+                    በ Vision Language School of English ከመምህር መሀመድ አብዱ ጋር በ 265 የተደራጁ ትምህርቶች፣ በድምፅ ልምምድ እና በዘመናዊ የማስተማሪያ ዘዴ የእንግሊዝኛ ቋንቋ ችሎታዎን ወደ ላቀ ደረጃ ያሳድጉ።
+                </p>
+                <div class="flex flex-wrap gap-3 pt-2">
+                    <a href="#register-section" class="px-6 py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm shadow-lg transition" data-i18n="hero_cta_reg">
+                        📝 አሁኑኑ ይመዝገቡ (Register Now)
+                    </a>
+                    <a href="#curriculum-section" class="px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-extrabold text-sm border border-white/20 transition" data-i18n="hero_cta_courses">
+                        📚 265 ትምህርቶችን ይመልከቱ
+                    </a>
+                </div>
+            </div>
+
+            <!-- Instructor & School Card -->
+            <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-400 to-orange-500 flex items-center justify-center text-slate-950 font-black text-2xl shadow-lg">MA</div>
+                    <div>
+                        <span class="text-xs font-bold text-amber-300 uppercase tracking-wider" data-i18n="lead_inst_label">ዋና መምህር እና መስራች</span>
+                        <h3 class="text-xl font-black text-white" data-i18n="lead_inst_name">መምህር መሀመድ አብዱ</h3>
+                        <p class="text-xs text-slate-300">Teacher Mohammed Abdu • Senior English Instructor</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-3 text-center pt-2">
+                    <div class="bg-slate-950/50 rounded-2xl p-3 border border-white/10">
+                        <div class="text-xl sm:text-2xl font-black text-amber-400">265+</div>
+                        <div class="text-[11px] text-slate-300 font-semibold" data-i18n="stat_lessons">ዝርዝር ትምህርቶች</div>
+                    </div>
+                    <div class="bg-slate-950/50 rounded-2xl p-3 border border-white/10">
+                        <div class="text-xl sm:text-2xl font-black text-emerald-400">2,650</div>
+                        <div class="text-[11px] text-slate-300 font-semibold" data-i18n="stat_examples">የድምፅ ምሳሌዎች</div>
+                    </div>
+                    <div class="bg-slate-950/50 rounded-2xl p-3 border border-white/10">
+                        <div class="text-xl sm:text-2xl font-black text-sky-400">4</div>
+                        <div class="text-[11px] text-slate-300 font-semibold" data-i18n="stat_shifts">የትምህርት ፈረቃዎች</div>
+                    </div>
+                </div>
+                <div class="pt-2 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-300">
+                    <span>📞 <strong class="text-white">0919466511</strong></span>
+                    <span>📍 <strong class="text-white" data-i18n="loc_short">ከሚሴ፣ ውሃ ልማት ፊት ለፊት</strong></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 1. Graduated Students 8-Slide Gallery Section -->
+    <section id="graduation-gallery" class="max-w-7xl mx-auto px-4 sm:px-6 pt-14 pb-8">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+            <div>
+                <span class="inline-block px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 text-xs font-extrabold mb-2">
+                    🎓 GRADUATION SHOWCASE
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white" data-i18n="grad_gal_title">
+                    የተመረቁ ተማሪዎች የምረቃ ፎቶዎች (8 Gallery)
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1" data-i18n="grad_gal_sub">
+                    በ Vision Language School of English ከሚሴ ትምህርታቸውን አጠናቀው የተመረቁ ተማሪዎች የምረቃ ስነ-ስርዓት ፎቶዎች
+                </p>
+            </div>
+            <div class="flex items-center gap-2">
+                <span id="galleryCounterBadge" class="px-3 py-1.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-black">1 / 8</span>
+                <button onclick="moveGallerySlide(-1)" class="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-indigo-600 hover:text-white font-black transition shadow-sm">←</button>
+                <button onclick="moveGallerySlide(1)" class="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-indigo-600 hover:text-white font-black transition shadow-sm">→</button>
+            </div>
+        </div>
+
+        <div class="relative overflow-hidden rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 bg-slate-900">
+            <div id="gallerySliderTrack" class="flex transition-transform duration-500 ease-out"></div>
+        </div>
+        <div id="galleryDotsContainer" class="flex justify-center gap-2 mt-4"></div>
+    </section>
+
+    <!-- 2. Current Active Students Photo Gallery Section (Unified, No Shift Division) -->
+    <section id="active-students-gallery" class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+        <div class="mb-6">
+            <span class="inline-block px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300 text-xs font-extrabold mb-2">
+                📸 LIVE CLASSROOM & ACTIVE LEARNERS
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white" data-i18n="act_gal_title">
+                አሁን እየተማሩ ያሉ ተማሪዎች ፎቶዎች
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1" data-i18n="act_gal_sub">
+                በ Vision Language School ከሚሴ በአሁኑ ወቅት እየተማሩ ያሉ ተማሪዎች የክፍል ውስጥ እና የንግግር ልምምድ ፎቶዎች
+            </p>
+        </div>
+        <div id="activeStudentsPhotoGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
+    </section>
+
+    <!-- 3. Student Learning Portal & 265 Lessons Curriculum -->
+    <section id="curriculum-section" class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+        <!-- Active Student Dashboard Banner (Shown when logged in) -->
+        <div id="studentActiveBanner" class="hidden mb-8 p-6 rounded-3xl bg-gradient-to-r from-indigo-600 to-purple-700 text-white shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <span class="px-3 py-1 rounded-full bg-white/20 text-xs font-extrabold">🎓 Student Portal Active</span>
+                <h3 class="text-xl sm:text-2xl font-black mt-2" id="studentWelcomeName">እንኳን ደህና መጡ!</h3>
+                <p class="text-xs sm:text-sm text-indigo-100 mt-1" id="studentStatsLine">ID: VLS-1001 • ነጥብ: 0 XP • የተከፈቱ ትምህርቶች: 1 / 265</p>
+            </div>
+            <div class="flex flex-wrap gap-2 self-start sm:self-center">
+                <button onclick="openCertificateModal()" class="px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-black shadow transition">
+                    🏅 ሰርተፊኬት (Certificate)
+                </button>
+                <button onclick="logoutUser()" class="px-4 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs font-black shadow transition">
+                    🚪 ውጣ (Logout)
+                </button>
+            </div>
+        </div>
+
+        <!-- Teacher Special Notes & Quizzes Section (Shown when logged in and notes exist) -->
+        <div id="studentTeacherNotesSection" class="hidden mb-10">
+            <h3 class="text-xl font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                <span>📢</span> <span data-i18n="teacher_notes_title">የመምህር መሀመድ አብዱ ልዩ ማስታወሻዎች እና ፈተናዎች</span>
+            </h3>
+            <div id="studentTeacherNotesGrid" class="grid md:grid-cols-2 gap-5"></div>
+        </div>
+
+        <!-- Curriculum Header & Search -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div>
+                <span class="inline-block px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 text-xs font-extrabold mb-2">
+                    📚 COMPLETE 265-LESSON CURRICULUM
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white" data-i18n="curr_title">
+                    የእንግሊዝኛ ቋንቋ ትምህርቶች (ከፊደል 'A' እስከ አቀላጥፎ መናገር)
+                </h2>
+            </div>
+            <div class="w-full md:w-80">
+                <input type="text" id="searchInput" oninput="renderCurriculum(this.value)" placeholder="🔍 ትምህርት ይፈልጉ (ለምሳሌ: Letter A, Tense, Verb)..." class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+            </div>
+        </div>
+
+        <!-- Locked Portal Gate (Shown when student is NOT logged in) -->
+        <div id="lockedPortalGate" class="rounded-3xl bg-white dark:bg-slate-900 border-2 border-dashed border-indigo-300 dark:border-indigo-800 p-8 sm:p-12 text-center space-y-4 shadow-sm">
+            <div class="w-16 h-16 mx-auto rounded-2xl bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-3xl">🔒</div>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white" data-i18n="gate_title">
+                የ 265 ትምህርቶች መማሪያ ፖርታል የተቆለፈ ነው
+            </h3>
+            <p class="max-w-xl mx-auto text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="gate_desc">
+                ሁሉንም 265 ዝርዝር የትምህርት ማስታወሻዎች፣ 2,650 የድምፅ ምሳሌዎች እና የንግግር መለማመጃዎች ለመክፈት በትምህርት ቤቱ የተሰጠዎትን <strong>Student ID</strong> እና <strong>Password</strong> ያስገቡ። ካልተመዘገቡ ከታች ይመዝገቡ።
+            </p>
+            <div class="flex flex-wrap justify-center gap-3 pt-2">
+                <button onclick="openAuthModal('student')" class="px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-black shadow-md transition" data-i18n="gate_btn_login">
+                    🔑 በ Student ID ይግቡ
+                </button>
+                <a href="#register-section" class="px-6 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-white text-xs sm:text-sm font-extrabold transition" data-i18n="gate_btn_reg">
+                    📝 አዲስ ተማሪ ይመዝገቡ
+                </a>
+            </div>
+        </div>
+
+        <!-- Unlocked Curriculum Container (Shown when student IS logged in) -->
+        <div id="unlockedCurriculumContainer" class="hidden space-y-8"></div>
+    </section>
+
+    <!-- 4. Student Testimonials & Success Stories -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+        <div class="text-center max-w-2xl mx-auto mb-8">
+            <span class="inline-block px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 text-xs font-extrabold mb-2">
+                ⭐ STUDENT SUCCESS STORIES
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white" data-i18n="test_title">
+                የተማሪዎቻችን ምስክርነት
+            </h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+                <div class="text-amber-400 text-sm">★★★★★</div>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="test_1_text">
+                    "ከፊደል A ጀምሬ በአጭር ጊዜ ውስጥ በራስ መተማመን እንግሊዝኛ መናገር ችያለሁ። የመምህር መሀመድ አብዱ አስተማመር እጅግ ግልፅ እና አበረታች ነው።"
+                </p>
+                <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <div class="font-black text-xs text-slate-900 dark:text-white">ሰሚራ አሊ (Semira Ali)</div>
+                    <div class="text-[11px] text-indigo-600">Spoken English Graduate • Kemissie</div>
+                </div>
+            </div>
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+                <div class="text-amber-400 text-sm">★★★★★</div>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="test_2_text">
+                    "በኦንላይን ፖርታሉ ላይ ያሉት 265 ትምህርቶች እና የድምፅ ምሳሌዎች ቤቴ ሆኜ አነባበቤን እንዳስተካክል በጣም ረድተውኛል።"
+                </p>
+                <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <div class="font-black text-xs text-slate-900 dark:text-white">አብዱራህማን ሁሴን (Abdurahman H.)</div>
+                    <div class="text-[11px] text-indigo-600">University Student • Kemissie</div>
+                </div>
+            </div>
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+                <div class="text-amber-400 text-sm">★★★★★</div>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="test_3_text">
+                    "ለልጆቼ ከሚሴ ውስጥ ከ Vision Language School የተሻለ የእንግሊዝኛ ማሰልጠኛ አላገኘሁም። በክፍል ውስጥ የሚደረገው ልምምድ ልዩ ነው።"
+                </p>
+                <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <div class="font-black text-xs text-slate-900 dark:text-white">አቶ ከማል መሀመድ (Mr. Kemal M.)</div>
+                    <div class="text-[11px] text-indigo-600">Parent • Kemissie</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Frequently Asked Questions (FAQ Accordion) -->
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 py-10">
+        <div class="text-center mb-8">
+            <span class="inline-block px-3 py-1 rounded-full bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300 text-xs font-extrabold mb-2">
+                ❓ FAQ
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white" data-i18n="faq_title">
+                ተደጋጋሚ ጥያቄዎች እና መልሶች
+            </h2>
+        </div>
+        <div class="space-y-3">
+            <details class="group rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5">
+                <summary class="cursor-pointer font-black text-sm flex items-center justify-between" data-i18n="faq_q1">
+                    <span>1. እንግሊዝኛን ከዜሮ (ከፊደል A) መጀመር ይቻላል?</span>
+                    <span class="text-indigo-600 group-open:rotate-180 transition">▼</span>
+                </summary>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-3 leading-relaxed" data-i18n="faq_a1">
+                    አዎ! ትምህርታችን የሚጀምረው ከፊደል 'A' እና 'B' አነባበብ ጀምሮ ስለሆነ ምንም መሰረት የሌላቸው ጀማሪዎች በቀላሉ ተከታትለው አቀላጥፈው መናገር ይችላሉ።
+                </p>
+            </details>
+            <details class="group rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5">
+                <summary class="cursor-pointer font-black text-sm flex items-center justify-between" data-i18n="faq_q2">
+                    <span>2. ትምህርት ቤቱ ከሚሴ ውስጥ የት ነው የሚገኘው?</span>
+                    <span class="text-indigo-600 group-open:rotate-180 transition">▼</span>
+                </summary>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-3 leading-relaxed" data-i18n="faq_a2">
+                    ትምህርት ቤታችን ከሚሴ ከተማ፣ ውሃ ልማት ፊት ለፊት ይገኛል። ለተጨማሪ መረጃ በ 0919466511 መደወል ይችላሉ።
+                </p>
+            </details>
+            <details class="group rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5">
+                <summary class="cursor-pointer font-black text-sm flex items-center justify-between" data-i18n="faq_q3">
+                    <span>3. የምስክር ወረቀት (Certificate) ይሰጣል?</span>
+                    <span class="text-indigo-600 group-open:rotate-180 transition">▼</span>
+                </summary>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-3 leading-relaxed" data-i18n="faq_a3">
+                    አዎ! ኮርሱን በብቃት ለሚያጠናቅቁ ተማሪዎች እውቅና ያለው የምረቃ የምስክር ወረቀት (Official Certificate) ይሰጣል።
+                </p>
+            </details>
+        </div>
+    </section>
+
+    <!-- 6. Public Student Registration Form -->
+    <section id="register-section" class="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+        <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-10 shadow-xl">
+            <div class="text-center max-w-xl mx-auto mb-8">
+                <span class="inline-block px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 text-xs font-extrabold mb-2">
+                    📝 ONLINE ADMISSION
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white" data-i18n="reg_title">
+                    የአዲስ ተማሪ መመዝገቢያ ፎርም
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-2" data-i18n="reg_sub">
+                    ከታች ያለውን ፎርም ሞልተው ሲልኩ ጥያቄዎ ለመምህር መሀመድ አብዱ (Admin) ይደርሳል፤ መምህሩ ሲያፀድቁት (Accept) ወዲያውኑ መማር ይጀምራሉ።
+                </p>
+            </div>
+
+            <form onsubmit="submitPublicRegistration(event)" class="grid sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold mb-1.5" data-i18n="lbl_fullname">ሙሉ ስም (Full Name) *</label>
+                    <input type="text" id="regFullName" required placeholder="ለምሳሌ: አህመድ መሀመድ" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1.5" data-i18n="lbl_phone">ስልክ ቁጥር (Phone Number) *</label>
+                    <input type="tel" id="regPhone" required placeholder="09..." class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1.5" data-i18n="lbl_program">የትምህርት ፕሮግራም (Program) *</label>
+                    <select id="regProgram" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="Spoken English (የንግግር ችሎታ)">Spoken English (የንግግር ችሎታ)</option>
+                        <option value="Basic Grammar & Reading (መሰረታዊ ሰዋሰው)">Basic Grammar & Reading (መሰረታዊ ሰዋሰው)</option>
+                        <option value="Beginner Alphabet A-Z (ከፊደል A ጀማሪ)">Beginner Alphabet A-Z (ከፊደል A ጀማሪ)</option>
+                        <option value="Kids & Students Tutorial (ለተማሪዎች)">Kids & Students Tutorial (ለተማሪዎች)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1.5" data-i18n="lbl_shift">የትምህርት ፈረቃ (Preferred Shift) *</label>
+                    <select id="regShift" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="Morning (ጠዋት)">Morning (ጠዋት)</option>
+                        <option value="Afternoon (ከሰዓት)">Afternoon (ከሰዓት)</option>
+                        <option value="Evening (ማታ)">Evening (ማታ)</option>
+                        <option value="Weekend (ቅዳሜ እና እሁድ)">Weekend (ቅዳሜ እና እሁድ)</option>
+                    </select>
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-bold mb-1.5" data-i18n="lbl_pass">የሚፈልጉት የይለፍ ቃል (Create Password) *</label>
+                    <input type="text" id="regPassword" required placeholder="ለመግባት የሚጠቀሙበት Password ይፍጠሩ" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div class="sm:col-span-2 pt-2">
+                    <button type="submit" class="w-full py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-sm shadow-lg transition" data-i18n="btn_submit_reg">
+                        ✅ ምዝገባውን ላክ (Submit Registration)
+                    </button>
+                </div>
+            </form>
+
+            <!-- Registration Confirmation Receipt -->
+            <div id="registrationReceiptBox" class="hidden mt-6 p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800 text-sm space-y-2"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-300 py-10 border-t border-slate-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+            <div>
+                <p class="font-black text-white text-sm">Vision Language School of English</p>
+                <p class="mt-1">📍 ከሚሴ ከተማ፣ ውሃ ልማት ፊት ለፊት (Kemissie) • 📞 0919466511</p>
+            </div>
+            <p class="text-slate-400">© 2026 Vision Language School • Lead Instructor: Teacher Mohammed Abdu</p>
+        </div>
+    </footer>
+
+    <!-- ===================================================================== -->
+    <!-- MODAL 1: LESSON DETAIL, IN-DEPTH NOTES, 10 AUDIO EXAMPLES, MIC & QUIZ -->
+    <!-- ===================================================================== -->
+    <div id="lessonModal" class="fixed inset-0 z-50 hidden bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-3xl w-full max-h-[92vh] overflow-y-auto shadow-2xl p-6 sm:p-8 space-y-6">
+            <div class="flex items-start justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+                <div>
+                    <span id="modalLessonBadge" class="px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 text-xs font-black">Lesson #1</span>
+                    <h3 id="modalLessonTitle" class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-2">Lesson Title</h3>
+                </div>
+                <button onclick="closeLessonModal()" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-rose-500 hover:text-white font-black transition">✕</button>
+            </div>
+
+            <!-- Core Formula / Rule -->
+            <div class="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60">
+                <div class="text-xs font-black text-amber-800 dark:text-amber-300 uppercase mb-1">📌 ዋና ህግ እና መዋቅር (Core Rule & Formula)</div>
+                <p id="modalLessonFormula" class="text-sm font-bold text-slate-900 dark:text-white"></p>
+            </div>
+
+            <!-- In-Depth Detailed Explanation -->
+            <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                    <h4 class="text-sm font-black text-indigo-600 dark:text-indigo-400">📖 ሰፊ እና ዝርዝር ትንታኔ (In-Depth Lesson Notes)</h4>
+                    <button onclick="speakCurrentLesson()" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold">🔊 ድምፅ ስማ</button>
+                </div>
+                <p id="modalLessonExplanation" class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-800/60 p-4 rounded-2xl border border-slate-200 dark:border-slate-800"></p>
+            </div>
+
+            <!-- 10 Detailed Examples with Audio -->
+            <div class="space-y-3">
+                <h4 class="text-sm font-black text-emerald-600 dark:text-emerald-400">🎧 10 ዝርዝር ምሳሌዎች ከድምፅ ጋር (10 Examples — Click to Listen)</h4>
+                <div id="modalExamplesList" class="grid sm:grid-cols-2 gap-2.5"></div>
+            </div>
+
+            <!-- Microphone Speaking Practice -->
+            <div class="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-3">
+                <div class="flex items-center justify-between gap-2">
+                    <div>
+                        <div class="text-xs font-black text-rose-600 dark:text-rose-400">🎙️ የንግግር መለማመጃ (Speaking Practice)</div>
+                        <p id="modalSpeakTarget" class="text-sm font-extrabold text-slate-900 dark:text-white mt-0.5"></p>
+                    </div>
+                    <button id="micBtn" onclick="startSpeechRecognition()" class="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-black shadow transition">
+                        🎤 ተናገር (Speak)
+                    </button>
+                </div>
+                <p id="speechResultText" class="text-xs font-bold text-slate-500"></p>
+            </div>
+
+            <!-- Lesson Quiz -->
+            <div class="p-5 rounded-2xl bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800/60 space-y-3">
+                <div class="text-xs font-black text-indigo-700 dark:text-indigo-300">📝 የትምህርቱ ማጠቃለያ ፈተና (Lesson Quiz)</div>
+                <p id="modalQuizQuestion" class="text-sm font-bold text-slate-900 dark:text-white"></p>
+                <div id="modalQuizOptions" class="space-y-2"></div>
+                <button onclick="submitLessonQuiz()" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-black shadow transition">
+                    ✅ መልሱን አረጋግጥ እና ቀጣዩን ትምህርት ክፈት
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- MODAL 2: STUDENT LOGIN & TEACHER ADMIN DASHBOARD                      -->
+    <!-- ===================================================================== -->
+    <div id="authModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-5xl w-full max-h-[92vh] overflow-y-auto shadow-2xl p-6 sm:p-8">
+            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 mb-6">
+                <div class="flex gap-2">
+                    <button onclick="switchAuthTab('student')" id="tabStudentBtn" class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-black">🎓 Student Login</button>
+                    <button onclick="switchAuthTab('admin')" id="tabAdminBtn" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-black">🛡️ Admin (መምህር)</button>
+                </div>
+                <button onclick="closeAuthModal()" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-rose-500 hover:text-white font-black transition">✕</button>
+            </div>
+
+            <!-- Student Login Form -->
+            <div id="studentLoginPanel" class="max-w-md mx-auto space-y-4 py-4">
+                <h3 class="text-xl font-black text-center">የተማሪ መግቢያ (Student Portal Login)</h3>
+                <p class="text-xs text-slate-500 text-center">በትምህርት ቤቱ የተሰጠዎትን Student ID እና Password ያስገቡ (Demo: <code>VLS-1001</code> / <code>123</code>)</p>
+                <form onsubmit="handleStudentLogin(event)" class="space-y-3">
+                    <input type="text" id="loginStudentId" required placeholder="Student ID (ለምሳሌ: VLS-1001)" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm">
+                    <input type="password" id="loginStudentPass" required placeholder="Password" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm">
+                    <button type="submit" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-sm">🔓 ግባ (Login)</button>
+                </form>
+            </div>
+
+            <!-- Admin Login Form -->
+            <div id="adminLoginPanel" class="hidden max-w-md mx-auto space-y-4 py-4">
+                <h3 class="text-xl font-black text-center">የመምህር መሀመድ አብዱ መቆጣጠሪያ (Admin Login)</h3>
+                <p class="text-xs text-slate-500 text-center">ነባሪ መግቢያ፡ Username: <code>mohammed</code> • Password: <code>admin123</code></p>
+                <form onsubmit="handleAdminLogin(event)" class="space-y-3">
+                    <input type="text" id="adminUser" required placeholder="Admin Username" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm">
+                    <input type="password" id="adminPass" required placeholder="Admin Password" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm">
+                    <button type="submit" class="w-full py-3 rounded-xl bg-slate-900 dark:bg-indigo-600 text-white font-black text-sm">🛡️ Admin ዳሽቦርድ ክፈት</button>
+                </form>
+            </div>
+
+            <!-- Admin Full Dashboard Panel -->
+            <div id="adminDashboardPanel" class="hidden space-y-8">
+                <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-900 text-white p-4 rounded-2xl">
+                    <div>
+                        <h3 class="font-black text-base">🛡️ Vision Admin Control Center — መምህር መሀመድ አብዱ</h3>
+                        <p class="text-xs text-slate-400">ተማሪዎችን ያፅድቁ፣ ID/Password ይስጡ፣ ማስታወሻና ፈተና ይልቀቁ፣ ፎቶዎችን ይጫኑ።</p>
+                    </div>
+                    <button onclick="logoutAdmin()" class="px-3.5 py-2 rounded-xl bg-rose-600 text-xs font-black">ውጣ (Admin Logout)</button>
+                </div>
+
+                <!-- Pending Approvals Alert Box -->
+                <div id="adminPendingSection" class="hidden p-5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border-2 border-amber-400 space-y-3">
+                    <h4 class="font-black text-sm text-amber-900 dark:text-amber-300">🔔 አዲስ የምዝገባ ጥያቄዎች (Pending Student Approvals)</h4>
+                    <div id="adminPendingList" class="space-y-2"></div>
+                </div>
+
+                <!-- Admin Direct Student Registration + Edit/Reset Password -->
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <!-- Add New Student -->
+                    <form onsubmit="adminAddStudent(event)" class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <h4 class="font-black text-sm">➕ አዲስ ተማሪ በቀጥታ መዝግብ (Register Student)</h4>
+                        <input type="text" id="admStuName" required placeholder="ሙሉ ስም (Full Name)" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs">
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="tel" id="admStuPhone" required placeholder="ስልክ (09...)" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs">
+                            <input type="text" id="admStuPass" required placeholder="Password ይፍጠሩ" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <select id="admStuProgram" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs">
+                                <option value="Spoken English">Spoken English</option>
+                                <option value="Basic Grammar">Basic Grammar</option>
+                                <option value="Beginner A-Z">Beginner A-Z</option>
+                            </select>
+                            <select id="admStuShift" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs">
+                                <option value="Morning">Morning (ጠዋት)</option>
+                                <option value="Afternoon">Afternoon (ከሰዓት)</option>
+                                <option value="Evening">Evening (ማታ)</option>
+                                <option value="Weekend">Weekend</option>
+                            </select>
+                        </div>
+                        <label class="flex items-center gap-2 text-xs font-bold">
+                            <input type="checkbox" id="admStuFullAccess"> ሙሉ 265 ኮርሶችን በአንድ ጊዜ ክፈትለት (VIP Full Access)
+                        </label>
+                        <button type="submit" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black">✅ ተማሪውን መዝግብ</button>
+                    </form>
+
+                    <!-- Teacher Notes & Questions Publisher -->
+                    <form onsubmit="adminPublishTeacherNote(event)" class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <h4 class="font-black text-sm">📢 ለተማሪዎች ልዩ ማስታወሻ እና ፈተና ልቀቅ</h4>
+                        <input type="text" id="noteTitleInput" required placeholder="የትምህርቱ ርዕስ (ለምሳሌ: Daily Idioms)" class="w-full px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs">
+                        <input type="text" id="noteRuleInput" required placeholder="ዋና ህግ / ምሳሌ" class="w-full px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs">
+                        <textarea id="noteBodyInput" rows="2" required placeholder="ሰፊ ማስታወሻ እዚህ ይጻፉ..." class="w-full px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs"></textarea>
+                        <input type="text" id="noteQuizQInput" required placeholder="የፈተና ጥያቄ (Quiz Question)" class="w-full px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs">
+                        <div class="grid grid-cols-3 gap-2">
+                            <input type="text" id="noteOptA" required placeholder="ምርጫ A" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs">
+                            <input type="text" id="noteOptB" required placeholder="ምርጫ B" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs">
+                            <input type="text" id="noteOptC" required placeholder="ምርጫ C" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs">
+                        </div>
+                        <div class="flex items-center justify-between gap-2">
+                            <select id="noteCorrectIdx" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold">
+                                <option value="0">ትክክለኛ መልስ: A</option>
+                                <option value="1">ትክክለኛ መልስ: B</option>
+                                <option value="2">ትክክለኛ መልስ: C</option>
+                            </select>
+                            <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black">📢 ለተማሪዎች ልቀቅ</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Photo Uploaders (Graduation 8 Gallery + Active Students Photos) -->
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <h4 class="font-black text-sm">🎓 የምረቃ ጋለሪ ፎቶ መቀየሪያ (8 Graduation Gallery)</h4>
+                        <select id="adminGallerySlotSelect" class="w-full px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold">
+                            <option value="0">Slide 1: የምረቃ ስነ-ስርዓት #1</option>
+                            <option value="1">Slide 2: የምስክር ወረቀት አሰጣጥ #2</option>
+                            <option value="2">Slide 3: የመድረክ ንግግር #3</option>
+                            <option value="3">Slide 4: የጋራ መታሰቢያ ፎቶ #4</option>
+                            <option value="4">Slide 5: Spoken English ተመራቂዎች #5</option>
+                            <option value="5">Slide 6: የእንግሊዝኛ ድራማ እና ውይይት #6</option>
+                            <option value="6">Slide 7: ከፊደል A የተመረቁ #7</option>
+                            <option value="7">Slide 8: የቤተሰቦች ደስታ #8</option>
+                        </select>
+                        <input type="file" accept="image/*" onchange="handleAdminGalleryUpload(event)" class="w-full text-xs">
+                        <button type="button" onclick="resetGalleryPhotos()" class="text-xs text-rose-600 font-bold underline">🔄 ፎቶዎችን ወደ መጀመሪያው መልስ</button>
+                    </div>
+
+                    <form onsubmit="handleAdminActiveStudentPhotoUpload(event)" class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <h4 class="font-black text-sm">📸 አሁን እየተማሩ ያሉ ተማሪዎች ፎቶ መጫኛ</h4>
+                        <input type="text" id="activePhotoCaption" required placeholder="የፎቶው መግለጫ (ለምሳሌ: የንግግር ልምምድ)" class="w-full px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs">
+                        <input type="file" id="activePhotoFileInput" accept="image/*" required class="w-full text-xs">
+                        <div class="flex items-center justify-between">
+                            <button type="submit" class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-black">⬆️ ፎቶውን ጫን</button>
+                            <button type="button" onclick="resetActiveStudentsPhotos()" class="text-xs text-rose-600 font-bold underline">🔄 ዳግም አስጀምር</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Edit Student Modal Box inside Admin -->
+                <div id="adminEditStudentBox" class="hidden p-5 rounded-2xl bg-indigo-50 dark:bg-indigo-950/50 border-2 border-indigo-400 space-y-3">
+                    <h4 class="font-black text-sm">✏️ የተማሪ መረጃ እና Password ማስተካከያ</h4>
+                    <form onsubmit="saveEditedStudent(event)" class="grid sm:grid-cols-4 gap-2">
+                        <input type="hidden" id="editStuId">
+                        <input type="text" id="editStuName" required placeholder="ሙሉ ስም" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border text-xs">
+                        <input type="text" id="editStuPhone" required placeholder="ስልክ" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border text-xs">
+                        <input type="text" id="editStuPass" required placeholder="አዲስ Password" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border text-xs font-bold">
+                        <div class="flex gap-2">
+                            <button type="submit" class="flex-1 py-2 rounded-xl bg-emerald-600 text-white text-xs font-black">💾 አስቀምጥ</button>
+                            <button type="button" onclick="document.getElementById('adminEditStudentBox').classList.add('hidden')" class="px-3 py-2 rounded-xl bg-slate-300 dark:bg-slate-700 text-xs font-bold">✕</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Registered Students Table -->
+                <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-100 dark:bg-slate-800 font-black uppercase">
+                            <tr>
+                                <th class="p-3">ID & Name</th>
+                                <th class="p-3">Phone / Shift</th>
+                                <th class="p-3">Password</th>
+                                <th class="p-3">Status & Access</th>
+                                <th class="p-3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminStudentsTableBody" class="divide-y divide-slate-200 dark:divide-slate-800"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- MODAL 3: GRADUATION CERTIFICATE GENERATOR & PRINT                     -->
+    <!-- ===================================================================== -->
+    <div id="certificateModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl space-y-5">
+            <div class="flex items-center justify-between">
+                <h3 class="font-black text-lg">🏅 የምረቃ የምስክር ወረቀት (Official Certificate)</h3>
+                <button onclick="document.getElementById('certificateModal').classList.add('hidden')" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 font-black">✕</button>
+            </div>
+
+            <div id="printableCertificateArea" class="p-8 sm:p-10 rounded-2xl border-8 border-double border-amber-500 bg-gradient-to-br from-amber-50 via-white to-indigo-50 text-slate-900 text-center space-y-4">
+                <div class="text-xs font-black tracking-widest text-indigo-700 uppercase">Vision Language School of English • Kemissie</div>
+                <h2 class="text-2xl sm:text-4xl font-black text-slate-950 tracking-tight">CERTIFICATE OF ACHIEVEMENT</h2>
+                <p class="text-xs sm:text-sm text-slate-600">This is to proudly certify that</p>
+                <div id="certStudentName" class="text-2xl sm:text-3xl font-black text-indigo-900 border-b-2 border-amber-400 inline-block px-8 pb-1">Student Name</div>
+                <p class="text-xs sm:text-sm text-slate-700 max-w-lg mx-auto leading-relaxed">
+                    has successfully demonstrated dedication and proficiency in the <strong>English Language Mastery Program</strong> at Vision Language School of English, Kemissie.
+                </p>
+                <div class="pt-6 flex items-center justify-between text-xs font-bold text-slate-700 max-w-lg mx-auto">
+                    <div class="text-left">
+                        <div class="font-black text-slate-950">Teacher Mohammed Abdu</div>
+                        <div class="text-[11px] text-slate-500">Lead Instructor & Director</div>
+                    </div>
+                    <div class="w-14 h-14 rounded-full bg-amber-400/30 border-2 border-amber-500 flex items-center justify-center font-black text-amber-800 text-[10px]">
+                        OFFICIAL<br>SEAL
+                    </div>
+                    <div class="text-right">
+                        <div id="certVerificationId" class="font-black text-indigo-700">ID: VLS-CERT-2026</div>
+                        <div id="certIssueDate" class="text-[11px] text-slate-500">2026</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3">
+                <button onclick="window.print()" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black shadow">
+                    🖨️ አትም / Save as PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. STATE & TRANSLATIONS (FULL WEBSITE AM <-> EN)
+        // ==========================================
+        let userState = JSON.parse(localStorage.getItem('vls_user_state')) || {
+            lang: 'am',
+            dark: false,
+            unlockedLessonId: 1,
+            totalScore: 0
+        };
+
+        const defaultStudents = [
+            {
+                id: 'VLS-1001',
+                name: 'Ahmed Mohammed',
+                phone: '0911000000',
+                program: 'Spoken English',
+                shift: 'Morning',
+                password: '123',
+                status: 'active',
+                fullAccess: false,
+                unlockedLessonId: 1,
+                totalScore: 0
+            }
+        ];
+
+        let studentsDB = JSON.parse(localStorage.getItem('vls_students_db')) || defaultStudents;
+        let currentStudent = JSON.parse(localStorage.getItem('vls_current_student')) || null;
+        let teacherPublishedNotes = JSON.parse(localStorage.getItem('vls_teacher_notes')) || [];
+
+        const translations = {
+            am: {
+                btn_login: 'ይግቡ / Login',
+                chat_tg: 'Telegram መልዕክት',
+                chat_wa: 'WhatsApp መልዕክት',
+                hero_loc: 'ከሚሴ ከተማ፣ ውሃ ልማት ፊት ለፊት (Kemissie)',
+                hero_title: 'እንግሊዝኛን ከፊደል <span class="text-amber-400">\'A\'</span> ጀምረው አቀላጥፈው ይናገሩ!',
+                hero_desc: 'በ Vision Language School of English ከመምህር መሀመድ አብዱ ጋር በ 265 የተደራጁ ትምህርቶች፣ በድምፅ ልምምድ እና በዘመናዊ የማስተማሪያ ዘዴ የእንግሊዝኛ ቋንቋ ችሎታዎን ወደ ላቀ ደረጃ ያሳድጉ።',
+                hero_cta_reg: '📝 አሁኑኑ ይመዝገቡ (Register Now)',
+                hero_cta_courses: '📚 265 ትምህርቶችን ይመልከቱ',
+                lead_inst_label: 'ዋና መምህር እና መስራች',
+                lead_inst_name: 'መምህር መሀመድ አብዱ',
+                stat_lessons: 'ዝርዝር ትምህርቶች',
+                stat_examples: 'የድምፅ ምሳሌዎች',
+                stat_shifts: 'የትምህርት ፈረቃዎች',
+                loc_short: 'ከሚሴ፣ ውሃ ልማት ፊት ለፊት',
+                grad_gal_title: 'የተመረቁ ተማሪዎች የምረቃ ፎቶዎች (8 Gallery)',
+                grad_gal_sub: 'በ Vision Language School of English ከሚሴ ትምህርታቸውን አጠናቀው የተመረቁ ተማሪዎች የምረቃ ስነ-ስርዓት ፎቶዎች',
+                act_gal_title: 'አሁን እየተማሩ ያሉ ተማሪዎች ፎቶዎች',
+                act_gal_sub: 'በ Vision Language School ከሚሴ በአሁኑ ወቅት እየተማሩ ያሉ ተማሪዎች የክፍል ውስጥ እና የንግግር ልምምድ ፎቶዎች',
+                teacher_notes_title: 'የመምህር መሀመድ አብዱ ልዩ ማስታወሻዎች እና ፈተናዎች',
+                curr_title: 'የእንግሊዝኛ ቋንቋ ትምህርቶች (ከፊደል \'A\' እስከ አቀላጥፎ መናገር)',
+                gate_title: 'የ 265 ትምህርቶች መማሪያ ፖርታል የተቆለፈ ነው',
+                gate_desc: 'ሁሉንም 265 ዝርዝር የትምህርት ማስታወሻዎች፣ 2,650 የድምፅ ምሳሌዎች እና የንግግር መለማመጃዎች ለመክፈት በትምህርት ቤቱ የተሰጠዎትን <strong>Student ID</strong> እና <strong>Password</strong> ያስገቡ። ካልተመዘገቡ ከታች ይመዝገቡ።',
+                gate_btn_login: '🔑 በ Student ID ይግቡ',
+                gate_btn_reg: '📝 አዲስ ተማሪ ይመዝገቡ',
+                test_title: 'የተማሪዎቻችን ምስክርነት',
+                test_1_text: '"ከፊደል A ጀምሬ በአጭር ጊዜ ውስጥ በራስ መተማመን እንግሊዝኛ መናገር ችያለሁ። የመምህር መሀመድ አብዱ አስተማመር እጅግ ግልፅ እና አበረታች ነው።"',
+                test_2_text: '"በኦንላይን ፖርታሉ ላይ ያሉት 265 ትምህርቶች እና የድምፅ ምሳሌዎች ቤቴ ሆኜ አነባበቤን እንዳስተካክል በጣም ረድተውኛል።"',
+                test_3_text: '"ለልጆቼ ከሚሴ ውስጥ ከ Vision Language School የተሻለ የእንግሊዝኛ ማሰልጠኛ አላገኘሁም። በክፍል ውስጥ የሚደረገው ልምምድ ልዩ ነው።"',
+                faq_title: 'ተደጋጋሚ ጥያቄዎች እና መልሶች',
+                faq_q1: '<span>1. እንግሊዝኛን ከዜሮ (ከፊደል A) መጀመር ይቻላል?</span><span class="text-indigo-600 group-open:rotate-180 transition">▼</span>',
+                faq_a1: 'አዎ! ትምህርታችን የሚጀምረው ከፊደል \'A\' እና \'B\' አነባበብ ጀምሮ ስለሆነ ምንም መሰረት የሌላቸው ጀማሪዎች በቀላሉ ተከታትለው አቀላጥፈው መናገር ይችላሉ።',
+                faq_q2: '<span>2. ትምህርት ቤቱ ከሚሴ ውስጥ የት ነው የሚገኘው?</span><span class="text-indigo-600 group-open:rotate-180 transition">▼</span>',
+                faq_a2: 'ትምህርት ቤታችን ከሚሴ ከተማ፣ ውሃ ልማት ፊት ለፊት ይገኛል። ለተጨማሪ መረጃ በ 0919466511 መደወል ይችላሉ።',
+                faq_q3: '<span>3. የምስክር ወረቀት (Certificate) ይሰጣል?</span><span class="text-indigo-600 group-open:rotate-180 transition">▼</span>',
+                faq_a3: 'አዎ! ኮርሱን በብቃት ለሚያጠናቅቁ ተማሪዎች እውቅና ያለው የምረቃ የምስክር ወረቀት (Official Certificate) ይሰጣል።',
+                reg_title: 'የአዲስ ተማሪ መመዝገቢያ ፎርም',
+                reg_sub: 'ከታች ያለውን ፎርም ሞልተው ሲልኩ ጥያቄዎ ለመምህር መሀመድ አብዱ (Admin) ይደርሳል፤ መምህሩ ሲያፀድቁት (Accept) ወዲያውኑ መማር ይጀምራሉ።',
+                lbl_fullname: 'ሙሉ ስም (Full Name) *',
+                lbl_phone: 'ስልክ ቁጥር (Phone Number) *',
+                lbl_program: 'የትምህርት ፕሮግራም (Program) *',
+                lbl_shift: 'የትምህርት ፈረቃ (Preferred Shift) *',
+                lbl_pass: 'የሚፈልጉት የይለፍ ቃል (Create Password) *',
+                btn_submit_reg: '✅ ምዝገባውን ላክ (Submit Registration)'
+            },
+            en: {
+                btn_login: 'Student Login',
+                chat_tg: 'Telegram Chat',
+                chat_wa: 'WhatsApp Chat',
+                hero_loc: 'Kemissie Town, In front of Water Development',
+                hero_title: 'Learn English from Letter <span class="text-amber-400">\'A\'</span> to Fluent Speaking!',
+                hero_desc: 'Master English with Teacher Mohammed Abdu at Vision Language School of English through 265 structured lessons, 2,650 audio examples, and interactive speaking practice.',
+                hero_cta_reg: '📝 Register Now',
+                hero_cta_courses: '📚 Explore 265 Lessons',
+                lead_inst_label: 'Lead Instructor & Founder',
+                lead_inst_name: 'Teacher Mohammed Abdu',
+                stat_lessons: 'Detailed Lessons',
+                stat_examples: 'Audio Examples',
+                stat_shifts: 'Flexible Shifts',
+                loc_short: 'Kemissie, Water Dev. Front',
+                grad_gal_title: 'Graduated Students Graduation Gallery (8 Slides)',
+                grad_gal_sub: 'Official graduation ceremony moments of students who completed their English courses at Vision Language School, Kemissie.',
+                act_gal_title: 'Current Active Students Photo Gallery',
+                act_gal_sub: 'Live classroom sessions and speaking practice photos of our current students in Kemissie.',
+                teacher_notes_title: 'Teacher Mohammed Abdu\'s Special Notes & Quizzes',
+                curr_title: 'Complete English Curriculum (From Letter \'A\' to Fluency)',
+                gate_title: '265-Lesson Student Learning Portal is Locked',
+                gate_desc: 'Please log in using your official <strong>Student ID</strong> and <strong>Password</strong> to unlock all 265 in-depth lessons, 2,650 audio examples, and speaking exercises.',
+                gate_btn_login: '🔑 Login with Student ID',
+                gate_btn_reg: '📝 Register as New Student',
+                test_title: 'Student Testimonials & Success Stories',
+                test_1_text: '"Starting from Letter A, I became confident in speaking English in a short time. Teacher Mohammed Abdu\'s teaching style is clear and motivating."',
+                test_2_text: '"The 265 lessons and audio examples on the portal helped me improve my pronunciation from home."',
+                test_3_text: '"Vision Language School is the best English training center in Kemissie for my children. The classroom practice is exceptional."',
+                faq_title: 'Frequently Asked Questions',
+                faq_q1: '<span>1. Can I start learning English from zero (Letter A)?</span><span class="text-indigo-600 group-open:rotate-180 transition">▼</span>',
+                faq_a1: 'Yes! Our curriculum starts right from Letter \'A\' and \'B\' phonics so complete beginners can easily progress to fluent speaking.',
+                faq_q2: '<span>2. Where is the school located in Kemissie?</span><span class="text-indigo-600 group-open:rotate-180 transition">▼</span>',
+                faq_a2: 'Our school is located in Kemissie Town, right in front of Water Development. Call 0919466511 for details.',
+                faq_q3: '<span>3. Do students receive a graduation certificate?</span><span class="text-indigo-600 group-open:rotate-180 transition">▼</span>',
+                faq_a3: 'Yes! Graduates who successfully complete their program receive an official certificate from Vision Language School.',
+                reg_title: 'New Student Online Registration',
+                reg_sub: 'Submit the form below. Once Teacher Mohammed Abdu approves (Accepts) your request in Admin, you can immediately start learning.',
+                lbl_fullname: 'Full Name *',
+                lbl_phone: 'Phone Number *',
+                lbl_program: 'Study Program *',
+                lbl_shift: 'Preferred Shift *',
+                lbl_pass: 'Create Password *',
+                btn_submit_reg: '✅ Submit Registration'
+            }
+        };
+
+        function applyTranslations() {
+            const lang = userState.lang || 'am';
+            const dict = translations[lang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) el.innerHTML = dict[key];
+            });
+            const langBtn = document.getElementById('langBtn');
+            if (langBtn) langBtn.textContent = lang === 'am' ? '🌐 English' : '🌐 አማርኛ';
+        }
+
+        function toggleLanguage() {
+            userState.lang = userState.lang === 'am' ? 'en' : 'am';
+            localStorage.setItem('vls_user_state', JSON.stringify(userState));
+            applyTranslations();
+            renderCurriculum();
+            renderGallerySlider();
+            renderActiveStudentsGallery();
+            renderStudentTeacherNotes();
+            showToast(userState.lang === 'en' ? '🌐 Switched to English' : '🌐 ወደ አማርኛ ተቀይሯል');
+        }
+
+        function toggleDarkMode() {
+            userState.dark = !userState.dark;
+            localStorage.setItem('vls_user_state', JSON.stringify(userState));
+            document.documentElement.classList.toggle('dark', userState.dark);
+            document.getElementById('themeBtn').textContent = userState.dark ? '☀️' : '🌙';
+        }
+
+        function showToast(msg) {
+            const box = document.getElementById('toastBox');
+            if (!box) return;
+            box.textContent = msg;
+            box.classList.remove('hidden');
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(() => box.classList.add('hidden'), 3500);
+        }
+
+        // ==========================================
+        // 2. 265 LESSONS GENERATOR (WITH 10 EXAMPLES EACH)
+        // ==========================================
+        function buildCurriculum265() {
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+            const coreTopics = [
+                { en: 'Vowels & Consonants', am: 'አናባቢ እና ተነባቢ ፊደላት', rule: 'Vowels: A, E, I, O, U | Consonants: 21 letters' },
+                { en: 'Greetings & Introductions', am: 'ሰላምታ እና ራስን ማስተዋወቅ', rule: 'Hello, My name is... / Nice to meet you.' },
+                { en: 'Personal Pronouns', am: 'ተውላጠ ስሞች (I, You, He, She, It, We, They)', rule: 'Subject + Verb + Object' },
+                { en: 'Verb To Be (am, is, are)', am: 'አገናኝ ግሶች (am, is, are)', rule: 'I am | He/She/It is | You/We/They are' },
+                { en: 'Articles (A, An, The)', am: 'መስተዋድዶች (A, An, The)', rule: 'An + Vowel sound | A + Consonant sound' },
+                { en: 'Singular & Plural Nouns', am: 'ነጠላ እና ብዙ ቁጥር ስሞች', rule: 'Book -> Books | Box -> Boxes | City -> Cities' },
+                { en: 'Demonstratives (This, That, These, Those)', am: 'አመልካች ተውላጠ ስሞች', rule: 'Near: This/These | Far: That/Those' },
+                { en: 'Simple Present Tense', am: 'የአሁን ጊዜ (Simple Present)', rule: 'Subject + Verb(s/es) + Object' },
+                { en: 'Present Continuous Tense', am: 'በመከናወን ላይ ያለ የአሁን ጊዜ', rule: 'Subject + am/is/are + Verb-ing' },
+                { en: 'Simple Past Tense', am: 'ያለፈ ጊዜ (Simple Past)', rule: 'Subject + Verb-ed (or Irregular Past) + Object' },
+                { en: 'Simple Future Tense (Will / Going to)', am: 'የወደፊት ጊዜ (Future Tense)', rule: 'Subject + will + Base Verb' },
+                { en: 'Prepositions of Place & Time', am: 'የቦታ እና የጊዜ መስተዋድዶች (In, On, At)', rule: 'In (months/cities) | On (days/surfaces) | At (exact time)' },
+                { en: 'Modal Verbs (Can, Must, Should)', am: 'ረዳት ግሶች (Can, Must, Should)', rule: 'Subject + Modal + Base Verb' },
+                { en: 'Asking WH-Questions', am: 'ጥያቄ መጠየቅ (What, Where, When, Why, How)', rule: 'WH-Word + Auxiliary + Subject + Verb?' },
+                { en: 'Daily Conversation & Shopping', am: 'የዕለት ተዕለት ንግግር እና ግብይት', rule: 'How much is this? / I would like to buy...' }
+            ];
+
+            const levels = [
+                { level: 1, titleAm: 'ደረጃ 1፡ ፍፁም ጀማሪ (ፊደላት A-Z እና ድምፆች)', titleEn: 'Level 1: Absolute Beginner (Alphabet A-Z)', icon: '🔤', lessons: [] },
+                { level: 2, titleAm: 'ደረጃ 2፡ መሰረታዊ ሰዋሰው እና ዓረፍተ ነገር መስራት', titleEn: 'Level 2: Basic Grammar & Sentence Building', icon: '🧱', lessons: [] },
+                { level: 3, titleAm: 'ደረጃ 3፡ 12ቱ የእንግሊዝኛ ጊዜያት (Tenses Mastery)', titleEn: 'Level 3: Complete English Tenses', icon: '⏳', lessons: [] },
+                { level: 4, titleAm: 'ደረጃ 4፡ የዕለት ተዕለት የንግግር ልምምድ (Spoken English)', titleEn: 'Level 4: Everyday Spoken English', icon: '💬', lessons: [] },
+                { level: 5, titleAm: 'ደረጃ 5፡ አቀላጥፎ መናገር እና የመድረክ ንግግር (Fluency)', titleEn: 'Level 5: Advanced Fluency & Public Speaking', icon: '🎙️', lessons: [] }
+            ];
+
+            for (let id = 1; id <= 265; id++) {
+                let titleEn, titleAm, rule, expAm, expEn, speakPhrase, examples, quiz;
+
+                if (id <= 26) {
+                    const letter = alphabet[id - 1];
+                    const sampleWords = [
+                        ['Apple', 'ፖም'], ['Ant', 'ጉንዳን'], ['Arm', 'ክንድ'], ['Air', 'አየር'], ['Art', 'ጥበብ'],
+                        ['Animal', 'እንስሳ'], ['Arrow', 'ቀስት'], ['April', 'ሚያዝያ'], ['Actor', 'ተዋናይ'], ['Answer', 'መልስ']
+                    ];
+                    titleEn = `Letter '${letter}' Phonics & Vocabulary`;
+                    titleAm = `ፊደል '${letter}' አነባበብ እና ቃላት`;
+                    rule = `Uppercase: ${letter} | Lowercase: ${letter.toLowerCase()} | Sound Practice`;
+                    expAm = `በዚህ ትምህርት የእንግሊዝኛ ፊደል '${letter}' ትክክለኛ አነባበብ፣ አጻጻፍ እና በ '${letter}' የሚጀምሩ 10 ጠቃሚ የእንግሊዝኛ ቃላትን ከአማርኛ ትርጉማቸው ጋር ይማራሉ። እያንዳንዱን ምሳሌ በመንካት ድምፁን ያዳምጡ።`;
+                    expEn = `In this lesson, you will master the pronunciation and writing of the English letter '${letter}', along with 10 essential vocabulary words starting with '${letter}'. Click any example to listen.`;
+                    speakPhrase = `Letter ${letter} is important in English`;
+                    examples = sampleWords.map((w, idx) => ({
+                        en: `${idx + 1}. ${letter} is for ${w[0]} — I learn the word ${w[0]}.`,
+                        am: `${letter} ለ ${w[1]} — "${w[0]}" የሚለውን ቃል እማራለሁ።`
+                    }));
+                    quiz = {
+                        qAm: `የትኛው ፊደል ነው በትምህርት #${id} ላይ የቀረበው?`,
+                        qEn: `Which letter is covered in Lesson #${id}?`,
+                        options: [`Letter ${letter}`, 'Letter Z', 'Number 9'],
+                        correct: 0
+                    };
+                } else {
+                    const topic = coreTopics[(id - 27) % coreTopics.length];
+                    const stepNum = id - 26;
+                    titleEn = `${topic.en} (Part ${stepNum})`;
+                    titleAm = `${topic.am} (ክፍል ${stepNum})`;
+                    rule = topic.rule;
+                    expAm = `ይህ ትምህርት #${id} ስለ "${topic.am}" በዝርዝር ያስተምራል። ህጉን (${topic.rule}) በመጠቀም ትክክለኛ የእንግሊዝኛ ዓረፍተ ነገሮችን እንዴት መመስረት እና በንግግር ውስጥ መጠቀም እንደሚችሉ ከታች በቀረቡት 10 ምሳሌዎች ይለማመዱ።`;
+                    expEn = `Lesson #${id} provides an in-depth guide on "${topic.en}". Follow the structure (${topic.rule}) and listen to all 10 practical examples below to build natural speaking fluency.`;
+                    speakPhrase = `I am practicing ${topic.en} at Vision Language School`;
+                    examples = Array.from({ length: 10 }, (_, idx) => ({
+                        en: `${idx + 1}. Example ${idx + 1}: I practice ${topic.en.toLowerCase()} every day at school.`,
+                        am: `ምሳሌ ${idx + 1}፡ በየቀኑ ትምህርት ቤት ውስጥ "${topic.am}" እለማመዳለሁ።`
+                    }));
+                    quiz = {
+                        qAm: `የትምህርት #${id} ዋና ህግ (Rule) የቱ ነው?`,
+                        qEn: `What is the core rule of Lesson #${id}?`,
+                        options: [topic.rule, 'No grammar needed', 'Only numbers'],
+                        correct: 0
+                    };
+                }
+
+                const lessonObj = { id, titleEn, titleAm, rule, expAm, expEn, speakPhrase, examples, quiz };
+                if (id <= 53) levels[0].lessons.push(lessonObj);
+                else if (id <= 106) levels[1].lessons.push(lessonObj);
+                else if (id <= 159) levels[2].lessons.push(lessonObj);
+                else if (id <= 212) levels[3].lessons.push(lessonObj);
+                else levels[4].lessons.push(lessonObj);
+            }
+            return levels;
+        }
+
+        const curriculumLevels = buildCurriculum265();
+        let currentActiveLesson = null;
+        let selectedQuizOption = null;
+
+        function renderCurriculum(filterText = '') {
+            const container = document.getElementById('unlockedCurriculumContainer');
+            if (!container) return;
+            const lang = userState.lang || 'am';
+            const q = filterText.trim().toLowerCase();
+            const maxUnlocked = currentStudent
+                ? (currentStudent.fullAccess ? 265 : (currentStudent.unlockedLessonId || 1))
+                : 1;
+
+            container.innerHTML = curriculumLevels.map(lvl => {
+                const filteredLessons = lvl.lessons.filter(l =>
+                    !q ||
+                    l.titleEn.toLowerCase().includes(q) ||
+                    l.titleAm.toLowerCase().includes(q) ||
+                    String(l.id) === q
+                );
+                if (filteredLessons.length === 0) return '';
+
+                return `
+                    <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-sm">
+                        <div class="flex items-center justify-between gap-3 mb-5 border-b border-slate-100 dark:border-slate-800 pb-4">
+                            <div class="flex items-center gap-3">
+                                <span class="text-2xl sm:text-3xl">${lvl.icon}</span>
+                                <div>
+                                    <h3 class="font-black text-base sm:text-lg text-slate-900 dark:text-white">
+                                        ${lang === 'am' ? lvl.titleAm : lvl.titleEn}
+                                    </h3>
+                                    <p class="text-xs text-slate-500">${filteredLessons.length} Lessons</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                            ${filteredLessons.map(lesson => {
+                                const isLocked = lesson.id > maxUnlocked;
+                                const isDone = lesson.id < maxUnlocked;
+                                return `
+                                    <div onclick="${isLocked ? `showToast('🔒 መጀመሪያ ትምህርት #${maxUnlocked} ፈተናውን ያጠናቅቁ!')` : `openLessonModalById(${lesson.id})`}"
+                                         class="cursor-pointer p-4 rounded-2xl border transition flex items-start justify-between gap-3 ${
+                                             isLocked
+                                                 ? 'bg-slate-100/70 dark:bg-slate-800/40 border-slate-200 dark:border-slate-800 opacity-65'
+                                                 : 'bg-slate-50 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 hover:border-indigo-500 hover:shadow-md'
+                                         }">
+                                        <div>
+                                            <span class="text-[11px] font-black ${isDone ? 'text-emerald-600' : 'text-indigo-600 dark:text-indigo-400'}">
+                                                Lesson #${lesson.id} ${isDone ? '✅' : ''}
+                                            </span>
+                                            <h4 class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white mt-0.5">
+                                                ${lang === 'am' ? lesson.titleAm : lesson.titleEn}
+                                            </h4>
+                                            <p class="text-[11px] text-slate-500 mt-1">10 Audio Examples • Quiz</p>
+                                        </div>
+                                        <span class="text-base">${isLocked ? '🔒' : '📖'}</span>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openLessonModalById(lessonId) {
+            for (const lvl of curriculumLevels) {
+                const found = lvl.lessons.find(l => l.id === lessonId);
+                if (found) {
+                    openLessonModal(found);
+                    return;
+                }
+            }
+        }
+
+        function openLessonModal(lesson) {
+            currentActiveLesson = lesson;
+            selectedQuizOption = null;
+            const lang = userState.lang || 'am';
+
+            document.getElementById('modalLessonBadge').textContent = `Lesson #${lesson.id} / 265`;
+            document.getElementById('modalLessonTitle').textContent = lang === 'am' ? `${lesson.titleAm} (${lesson.titleEn})` : lesson.titleEn;
+            document.getElementById('modalLessonFormula').textContent = lesson.rule;
+            document.getElementById('modalLessonExplanation').textContent = lang === 'am' ? lesson.expAm : lesson.expEn;
+            document.getElementById('modalSpeakTarget').textContent = `"${lesson.speakPhrase}"`;
+            document.getElementById('speechResultText').textContent = '';
+
+            const exList = document.getElementById('modalExamplesList');
+            exList.innerHTML = lesson.examples.map(ex => `
+                <button type="button" onclick="speakEnglishText('${ex.en.replace(/'/g, "\\'")}')"
+                        class="text-left p-3 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 border border-slate-200 dark:border-slate-700 transition">
+                    <div class="text-xs font-extrabold text-slate-900 dark:text-white flex items-center justify-between gap-2">
+                        <span>${ex.en}</span>
+                        <span class="text-indigo-600 shrink-0">🔊</span>
+                    </div>
+                    <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">${ex.am}</div>
+                </button>
+            `).join('');
+
+            document.getElementById('modalQuizQuestion').textContent = lang === 'am' ? lesson.quiz.qAm : lesson.quiz.qEn;
+            document.getElementById('modalQuizOptions').innerHTML = lesson.quiz.options.map((opt, idx) => `
+                <label class="flex items-center gap-2.5 p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer text-xs font-bold">
+                    <input type="radio" name="lessonQuizRadio" value="${idx}" onchange="selectedQuizOption = ${idx}">
+                    <span>${opt}</span>
+                </label>
+            `).join('');
+
+            document.getElementById('lessonModal').classList.remove('hidden');
+        }
+
+        function closeLessonModal() {
+            document.getElementById('lessonModal').classList.add('hidden');
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        }
+
+        function speakEnglishText(text) {
+            if (!('speechSynthesis' in window)) {
+                showToast('⚠️ ብራውዘርዎ ድምፅ አንባቢን አይደግፍም።');
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(text.replace(/^\d+\.\s*/, ''));
+            utter.lang = 'en-US';
+            utter.rate = 0.92;
+            window.speechSynthesis.speak(utter);
+        }
+
+        function speakCurrentLesson() {
+            if (!currentActiveLesson) return;
+            speakEnglishText(`${currentActiveLesson.titleEn}. ${currentActiveLesson.rule}. ${currentActiveLesson.speakPhrase}`);
+        }
+
+        function startSpeechRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const resEl = document.getElementById('speechResultText');
+            if (!SpeechRecognition) {
+                resEl.textContent = '⚠️ ብራውዘርዎ ማይክሮፎን አይደግፍም (Chrome ይጠቀሙ)።';
+                return;
+            }
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            resEl.textContent = '🎙️ እያዳመጠ ነው... አሁን ይናገሩ (Listening...)';
+            recognition.onresult = (e) => {
+                const spoken = e.results[0][0].transcript;
+                resEl.innerHTML = `✅ የተናገሩት: <span class="text-emerald-600 font-black">"${spoken}"</span> — በጣም ጥሩ!`;
+            };
+            recognition.onerror = () => {
+                resEl.textContent = '⚠️ ድምፅ አልተሰማም፤ እባክዎ ማይክሮፎን ፈቅደው እንደገና ይሞክሩ።';
+            };
+            recognition.start();
+        }
+
+        function submitLessonQuiz() {
+            if (selectedQuizOption === null) {
+                showToast('⚠️ እባክዎ መጀመሪያ አንድ መልስ ይምረጡ!');
+                return;
+            }
+            if (selectedQuizOption === currentActiveLesson.quiz.correct) {
+                const nextId = currentActiveLesson.id + 1;
+                if (currentStudent) {
+                    currentStudent.unlockedLessonId = Math.max(currentStudent.unlockedLessonId || 1, nextId);
+                    currentStudent.totalScore = (currentStudent.totalScore || 0) + 10;
+                    studentsDB = studentsDB.map(s => s.id === currentStudent.id ? currentStudent : s);
+                    localStorage.setItem('vls_students_db', JSON.stringify(studentsDB));
+                    localStorage.setItem('vls_current_student', JSON.stringify(currentStudent));
+                    updateStudentSessionUI();
+                }
+                renderCurriculum();
+                closeLessonModal();
+                showToast(`🎉 በትክክል መልሰዋል! +10 XP አግኝተዋል፤ ትምህርት #${nextId} ተከፍቷል!`);
+            } else {
+                showToast('❌ የተሳሳተ መልስ ነው። ማስታወሻውን አንብበው እንደገና ይሞክሩ!');
+            }
+        }
+
+        // ==========================================
+        // 3. CERTIFICATE GENERATOR
+        // ==========================================
+        function openCertificateModal() {
+            if (!currentStudent) return;
+            document.getElementById('certStudentName').textContent = currentStudent.name;
+            document.getElementById('certVerificationId').textContent = `ID: ${currentStudent.id}-CERT`;
+            document.getElementById('certIssueDate').textContent = new Date().toLocaleDateString();
+            document.getElementById('certificateModal').classList.remove('hidden');
+        }
+
+        // ==========================================
+        // 4. REGISTRATION, LOGIN & ADMIN DASHBOARD
+        // ==========================================
+        function updateAdminPendingBadge() {
+            const pendingCount = studentsDB.filter(s => s.status === 'pending').length;
+            const badge = document.getElementById('adminPendingBadge');
+            if (!badge) return;
+            if (pendingCount > 0) {
+                badge.textContent = pendingCount;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function submitPublicRegistration(e) {
+            e.preventDefault();
+            const name = document.getElementById('regFullName').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const program = document.getElementById('regProgram').value;
+            const shift = document.getElementById('regShift').value;
+            const password = document.getElementById('regPassword').value.trim();
+
+            const newId = 'VLS-' + (1000 + studentsDB.length + 1);
+            const newStudent = {
+                id: newId,
+                name,
+                phone,
+                program,
+                shift,
+                password,
+                status: 'pending',
+                fullAccess: false,
+                unlockedLessonId: 1,
+                totalScore: 0
+            };
+
+            studentsDB.unshift(newStudent);
+            localStorage.setItem('vls_students_db', JSON.stringify(studentsDB));
+            updateAdminPendingBadge();
+
+            const receipt = document.getElementById('registrationReceiptBox');
+            receipt.innerHTML = `
+                <div class="font-black text-emerald-800 dark:text-emerald-300">✅ ምዝገባዎ በተሳካ ሁኔታ ተልኳል!</div>
+                <p>የተመደበልዎት Student ID: <strong class="text-indigo-700 dark:text-indigo-300">${newId}</strong> • Password: <strong>${password}</strong></p>
+                <p class="text-xs text-slate-600 dark:text-slate-400">⏳ መምህር መሀመድ አብዱ በ Admin ሲያፀድቁት (Accept) በዚህ ID እና Password መግባት ይችላሉ።</p>
+            `;
+            receipt.classList.remove('hidden');
+            e.target.reset();
+            showToast('📩 ምዝገባዎ ለመምህሩ Admin ተልኳል!');
+        }
+
+        function openAuthModal(tab = 'student') {
+            document.getElementById('authModal').classList.remove('hidden');
+            switchAuthTab(tab);
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+        }
+
+        function switchAuthTab(tab) {
+            const stuPanel = document.getElementById('studentLoginPanel');
+            const admLogin = document.getElementById('adminLoginPanel');
+            const admDash = document.getElementById('adminDashboardPanel');
+            const btnStu = document.getElementById('tabStudentBtn');
+            const btnAdm = document.getElementById('tabAdminBtn');
+
+            if (tab === 'student') {
+                stuPanel.classList.remove('hidden');
+                admLogin.classList.add('hidden');
+                admDash.classList.add('hidden');
+                btnStu.className = 'px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-black';
+                btnAdm.className = 'px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-black';
+            } else {
+                stuPanel.classList.add('hidden');
+                btnAdm.className = 'px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-black';
+                btnStu.className = 'px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-black';
+                if (sessionStorage.getItem('vls_admin_logged') === 'true') {
+                    admLogin.classList.add('hidden');
+                    admDash.classList.remove('hidden');
+                    renderAdminDashboard();
+                } else {
+                    admLogin.classList.remove('hidden');
+                    admDash.classList.add('hidden');
+                }
+            }
+        }
+
+        function handleStudentLogin(e) {
+            e.preventDefault();
+            const idInput = document.getElementById('loginStudentId').value.trim().toUpperCase();
+            const passInput = document.getElementById('loginStudentPass').value.trim();
+
+            const found = studentsDB.find(s => s.id.toUpperCase() === idInput && s.password === passInput);
+            if (!found) {
+                showToast('❌ የተሳሳተ Student ID ወይም Password!');
+                return;
+            }
+            if (found.status === 'pending') {
+                showToast('⏳ ምዝገባዎ በመምህር መሀመድ አብዱ እስኪፀድቅ (Accept) በመጠባበቅ ላይ ነው!');
+                return;
+            }
+            if (found.status === 'suspended') {
+                showToast('🚫 አካውንትዎ ታግዷል። እባክዎ ትምህርት ቤቱን ያነጋግሩ (0919466511)።');
+                return;
+            }
+
+            currentStudent = found;
+            localStorage.setItem('vls_current_student', JSON.stringify(currentStudent));
+            updateStudentSessionUI();
+            closeAuthModal();
+            showToast(`🎉 እንኳን ደህና መጡ ${found.name}!`);
+        }
+
+        function logoutUser() {
+            currentStudent = null;
+            localStorage.removeItem('vls_current_student');
+            updateStudentSessionUI();
+            showToast('👋 ከተማሪ ፖርታል ወጥተዋል።');
+        }
+
+        function updateStudentSessionUI() {
+            const gate = document.getElementById('lockedPortalGate');
+            const unlocked = document.getElementById('unlockedCurriculumContainer');
+            const banner = document.getElementById('studentActiveBanner');
+            const notesSec = document.getElementById('studentTeacherNotesSection');
+            const navBtn = document.getElementById('navStudentBtn');
+
+            if (currentStudent && currentStudent.status === 'active') {
+                gate.classList.add('hidden');
+                unlocked.classList.remove('hidden');
+                banner.classList.remove('hidden');
+                document.getElementById('studentWelcomeName').textContent = `እንኳን ደህና መጡ፣ ${currentStudent.name}!`;
+                const countUnlocked = currentStudent.fullAccess ? 265 : (currentStudent.unlockedLessonId || 1);
+                document.getElementById('studentStatsLine').textContent = `ID: ${currentStudent.id} • ነጥብ: ${currentStudent.totalScore || 0} XP • የተከፈቱ ትምህርቶች: ${countUnlocked} / 265`;
+                navBtn.innerHTML = `🎓 ${currentStudent.id}`;
+                renderCurriculum();
+                renderStudentTeacherNotes();
+            } else {
+                gate.classList.remove('hidden');
+                unlocked.classList.add('hidden');
+                banner.classList.add('hidden');
+                if (notesSec) notesSec.classList.add('hidden');
+                navBtn.innerHTML = `🔐 <span data-i18n="btn_login">${userState.lang === 'en' ? 'Student Login' : 'ይግቡ / Login'}</span>`;
+            }
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('adminUser').value.trim();
+            const p = document.getElementById('adminPass').value.trim();
+            if (u === 'mohammed' && p === 'admin123') {
+                sessionStorage.setItem('vls_admin_logged', 'true');
+                document.getElementById('adminLoginPanel').classList.add('hidden');
+                document.getElementById('adminDashboardPanel').classList.remove('hidden');
+                renderAdminDashboard();
+                showToast('🛡️ እንኳን ደህና መጡ መምህር መሀመድ አብዱ!');
+            } else {
+                showToast('❌ የተሳሳተ Admin Username ወይም Password!');
+            }
+        }
+
+        function logoutAdmin() {
+            sessionStorage.removeItem('vls_admin_logged');
+            closeAuthModal();
+            showToast('Admin ወጥቷል።');
+        }
+
+        function renderAdminDashboard() {
+            updateAdminPendingBadge();
+            const pending = studentsDB.filter(s => s.status === 'pending');
+            const pendingSec = document.getElementById('adminPendingSection');
+            const pendingList = document.getElementById('adminPendingList');
+
+            if (pending.length > 0) {
+                pendingSec.classList.remove('hidden');
+                pendingList.innerHTML = pending.map(s => `
+                    <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-white dark:bg-slate-900 border border-amber-300 text-xs">
+                        <div>
+                            <strong>${s.name}</strong> (${s.id}) • 📞 ${s.phone} • ${s.program} (${s.shift}) • Pass: <code>${s.password}</code>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="approvePendingStudent('${s.id}')" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white font-black">✅ Accept (ተቀበል)</button>
+                            <button onclick="deleteStudent('${s.id}')" class="px-3 py-1.5 rounded-lg bg-rose-600 text-white font-black">✕ Reject</button>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                pendingSec.classList.add('hidden');
+            }
+
+            const tbody = document.getElementById('adminStudentsTableBody');
+            tbody.innerHTML = studentsDB.map(s => `
+                <tr>
+                    <td class="p-3">
+                        <div class="font-black">${s.name}</div>
+                        <div class="text-[11px] text-indigo-600 font-bold">${s.id} • ${s.program}</div>
+                    </td>
+                    <td class="p-3">${s.phone}<br><span class="text-[11px] text-slate-500">${s.shift}</span></td>
+                    <td class="p-3 font-mono font-bold">${s.password}</td>
+                    <td class="p-3">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-black ${
+                            s.status === 'active' ? 'bg-emerald-100 text-emerald-800' :
+                            s.status === 'pending' ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800'
+                        }">${s.status.toUpperCase()}</span>
+                        <div class="text-[10px] mt-1 font-bold">${s.fullAccess ? '🌟 VIP 265 Unlocked' : `Lesson #${s.unlockedLessonId || 1}`}</div>
+                    </td>
+                    <td class="p-3">
+                        <div class="flex flex-wrap gap-1.5">
+                            <button onclick="openEditStudent('${s.id}')" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-[11px] font-bold">✏️ Edit/Pass</button>
+                            <button onclick="toggleStudentFullAccess('${s.id}')" class="px-2.5 py-1 rounded-lg bg-amber-500 text-slate-950 text-[11px] font-bold">${s.fullAccess ? 'Step-by-Step' : 'Unlock 265'}</button>
+                            <button onclick="toggleStudentStatus('${s.id}')" class="px-2.5 py-1 rounded-lg bg-slate-700 text-white text-[11px] font-bold">${s.status === 'active' ? 'Suspend' : 'Activate'}</button>
+                            <button onclick="deleteStudent('${s.id}')" class="px-2 py-1 rounded-lg bg-rose-600 text-white text-[11px] font-bold">🗑️</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function approvePendingStudent(id) {
+            studentsDB = studentsDB.map(s => s.id === id ? { ...s, status: 'active' } : s);
+            localStorage.setItem('vls_students_db', JSON.stringify(studentsDB));
+            renderAdminDashboard();
+            showToast(`✅ ተማሪ ${id} ተቀባይነት አግኝቷል (Approved)!`);
+        }
+
+        function adminAddStudent(e) {
+            e.preventDefault();
+            const name = document.getElementById('admStuName').value.trim();
+            const phone = document.getElementById('admStuPhone').value.trim();
+            const password = document.getElementById('admStuPass').value.trim();
+            const program = document.getElementById('admStuProgram').value;
+            const shift = document.getElementById('admStuShift').value;
+            const fullAccess = document.getElementById('admStuFullAccess').checked;
+
+            const newId = 'VLS-' + (1000 + studentsDB.length + 1);
+            studentsDB.unshift({
+                id: newId,
+                name,
+                phone,
+                program,
+                shift,
+                password,
+                status: 'active',
+                fullAccess,
+                unlockedLessonId: fullAccess ? 265 : 1,
+                totalScore: 0
+            });
+            localStorage.setItem('vls_students_db', JSON.stringify(studentsDB));
+            e.target.reset();
+            renderAdminDashboard();
+            showToast(`✅ ተማሪ ${name} (${newId}) ተመዝግቧል!`);
+        }
+
+        function openEditStudent(id) {
+            const s = studentsDB.find(st => st.id === id);
+            if (!s) return;
+            document.getElementById('editStuId').value = s.id;
+            document.getElementById('editStuName').value = s.name;
+            document.getElementById('editStuPhone').value = s.phone;
+            document.getElementById('editStuPass').value = s.password;
+            document.getElementById('adminEditStudentBox').classList.remove('hidden');
+        }
+
+        function saveEditedStudent(e) {
+            e.preventDefault();
+            const id = document.getElementById('editStuId').value;
+            const name = document.getElementById('editStuName').value.trim();
+            const phone = document.getElementById('editStuPhone').value.trim();
+            const password = document.getElementById('editStuPass').value.trim();
+
+            studentsDB = studentsDB.map(s => s.id === id ? { ...s, name, phone, password } : s);
+            localStorage.setItem('vls_students_db', JSON.stringify(studentsDB));
+            document.getElementById('adminEditStudentBox').classList.add('hidden');
+            renderAdminDashboard();
+            showToast(`💾 የተማሪ ${id} መረጃ እና Password ተስተካክሏል!`);
+        }
+
+        function toggleStudentFullAccess(id) {
+            studentsDB = studentsDB.map(s => s.id === id ? { ...s, fullAccess: !s.fullAccess } : s);
+            localStorage.setItem('vls_students_db', JSON.stringify(studentsDB));
+            renderAdminDashboard();
+            showToast('🔄 የተማሪው የኮርስ መክፈቻ ደረጃ ተቀይሯል።');
+        }
+
+        function toggleStudentStatus(id) {
+            studentsDB = studentsDB.map(s => s.id === id ? { ...s, status: s.status === 'active' ? 'suspended' : 'active' } : s);
+            localStorage.setItem('vls_students_db', JSON.stringify(studentsDB));
+            renderAdminDashboard();
+            showToast('🔄 የተማሪው ሁኔታ ተቀይሯል።');
+        }
+
+        function deleteStudent(id) {
+            studentsDB = studentsDB.filter(s => s.id !== id);
+            localStorage.setItem('vls_students_db', JSON.stringify(studentsDB));
+            renderAdminDashboard();
+            showToast('🗑️ ተማሪው ተሰርዟል።');
+        }
+
+        // ==========================================
+        // 5. TEACHER SPECIAL NOTES & QUIZZES
+        // ==========================================
+        function adminPublishTeacherNote(e) {
+            e.preventDefault();
+            const note = {
+                id: Date.now(),
+                title: document.getElementById('noteTitleInput').value.trim(),
+                rule: document.getElementById('noteRuleInput').value.trim(),
+                body: document.getElementById('noteBodyInput').value.trim(),
+                question: document.getElementById('noteQuizQInput').value.trim(),
+                options: [
+                    document.getElementById('noteOptA').value.trim(),
+                    document.getElementById('noteOptB').value.trim(),
+                    document.getElementById('noteOptC').value.trim()
+                ],
+                correct: parseInt(document.getElementById('noteCorrectIdx').value, 10)
+            };
+            teacherPublishedNotes.unshift(note);
+            localStorage.setItem('vls_teacher_notes', JSON.stringify(teacherPublishedNotes));
+            e.target.reset();
+            renderStudentTeacherNotes();
+            showToast('📢 ማስታወሻው እና የፈተና ጥያቄው ለተማሪዎች ተለቋል!');
+        }
+
+        function renderStudentTeacherNotes() {
+            const sec = document.getElementById('studentTeacherNotesSection');
+            const grid = document.getElementById('studentTeacherNotesGrid');
+            if (!sec || !grid || !currentStudent || teacherPublishedNotes.length === 0) {
+                if (sec) sec.classList.add('hidden');
+                return;
+            }
+            sec.classList.remove('hidden');
+            grid.innerHTML = teacherPublishedNotes.map(n => `
+                <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border-2 border-amber-300 dark:border-amber-700/60 shadow-sm space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 text-[11px] font-black">Teacher's Note</span>
+                        <button onclick="speakEnglishText('${n.rule.replace(/'/g, "\\'")}')" class="text-xs font-bold text-indigo-600">🔊 Listen</button>
+                    </div>
+                    <h4 class="font-black text-base text-slate-900 dark:text-white">${n.title}</h4>
+                    <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-indigo-700 dark:text-indigo-300">${n.rule}</div>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${n.body}</p>
+                    <div class="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2">
+                        <p class="text-xs font-black">❓ ${n.question}</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${n.options.map((opt, idx) => `
+                                <button onclick="checkTeacherNoteQuiz(${n.id}, ${idx})" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-600 hover:text-white text-xs font-bold transition">
+                                    ${opt}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function checkTeacherNoteQuiz(noteId, chosenIdx) {
+            const note = teacherPublishedNotes.find(n => n.id === noteId);
+            if (!note) return;
+            if (chosenIdx === note.correct) {
+                if (currentStudent) {
+                    currentStudent.totalScore = (currentStudent.totalScore || 0) + 10;
+                    studentsDB = studentsDB.map(s => s.id === currentStudent.id ? currentStudent : s);
+                    localStorage.setItem('vls_students_db', JSON.stringify(studentsDB));
+                    localStorage.setItem('vls_current_student', JSON.stringify(currentStudent));
+                    updateStudentSessionUI();
+                }
+                showToast('🎉 ትክክለኛ መልስ! +10 XP ነጥብ አግኝተዋል!');
+            } else {
+                showToast('❌ የተሳሳተ መልስ ነው፤ እንደገና ይሞክሩ!');
+            }
+        }
+
+        // ==========================================
+        // 6. GRADUATION 8-SLIDE GALLERY & ACTIVE STUDENTS GALLERY
+        // ==========================================
+        const defaultGraduationGallery = [
+            {
+                badge: 'GRADUATION #1',
+                titleAm: 'የምረቃ ስነ-ስርዓት — Vision Language School (ከሚሴ)',
+                titleEn: 'Graduation Ceremony — Vision Language School, Kemissie',
+                descAm: 'ኮርሳቸውን በብቃት ያጠናቀቁ ተማሪዎች ከመምህር መሀመድ አብዱ ጋር',
+                descEn: 'Graduates celebrating completion with Teacher Mohammed Abdu',
+                bgClass: 'from-indigo-900 via-purple-900 to-slate-900',
+                imgUrl: ''
+            },
+            {
+                badge: 'GRADUATION #2',
+                titleAm: 'የምስክር ወረቀት አሰጣጥ (Official Certificate Award)',
+                titleEn: 'Official Certificate Award Ceremony',
+                descAm: 'ለተመራቂ ተማሪዎች የእውቅና ሰርተፊኬት ሲበረከት',
+                descEn: 'Awarding official achievement certificates to top graduates',
+                bgClass: 'from-emerald-900 via-teal-900 to-slate-900',
+                imgUrl: ''
+            },
+            {
+                badge: 'GRADUATION #3',
+                titleAm: 'የመድረክ ንግግር እና ክርክር (Public Speaking Showcase)',
+                titleEn: 'Graduation Public Speaking Showcase',
+                descAm: 'ተመራቂ ተማሪዎች በመድረክ ላይ በእንግሊዝኛ ንግግር ሲያቀርቡ',
+                descEn: 'Graduates delivering fluent English speeches on stage',
+                bgClass: 'from-amber-900 via-orange-900 to-slate-900',
+                imgUrl: ''
+            },
+            {
+                badge: 'GRADUATION #4',
+                titleAm: 'የጋራ መታሰቢያ ፎቶ (Batch Graduation Photo)',
+                titleEn: 'Batch Graduation Group Photo',
+                descAm: 'የከሚሴ ቅርንጫፍ ተመራቂ ተማሪዎች የጋራ መታሰቢያ',
+                descEn: 'Memorable group photo of Kemissie batch graduates',
+                bgClass: 'from-sky-900 via-blue-900 to-slate-900',
+                imgUrl: ''
+            },
+            {
+                badge: 'GRADUATION #5',
+                titleAm: 'የንግግር ችሎታ ተመራቂዎች (Spoken English Graduates)',
+                titleEn: 'Spoken English Mastery Graduates',
+                descAm: 'በአጭር ጊዜ ውስጥ እንግሊዝኛን አቀላጥፈው መናገር የቻሉ ተማሪዎች',
+                descEn: 'Students who mastered fluent English speaking',
+                bgClass: 'from-purple-900 via-fuchsia-900 to-slate-900',
+                imgUrl: ''
+            },
+            {
+                badge: 'GRADUATION #6',
+                titleAm: 'የእንግሊዝኛ ድራማ እና ውይይት (English Drama & Debate)',
+                titleEn: 'Graduation English Drama & Debate',
+                descAm: 'በምረቃ ዕለት የቀረበ ልዩ የእንግሊዝኛ ድራማ እና ውይይት',
+                descEn: 'Special English drama and debate performed at graduation',
+                bgClass: 'from-rose-900 via-pink-900 to-slate-900',
+                imgUrl: ''
+            },
+            {
+                badge: 'GRADUATION #7',
+                titleAm: 'ከፊደል A ጀምረው የተመረቁ (From Letter A to Fluency)',
+                titleEn: 'From Letter A to Fluent English Graduates',
+                descAm: 'ከመሰረቱ ጀምረው 265ቱን ትምህርቶች ያጠናቀቁ ተማሪዎች',
+                descEn: 'Beginners who progressed from Letter A to full fluency',
+                bgClass: 'from-cyan-900 via-indigo-900 to-slate-900',
+                imgUrl: ''
+            },
+            {
+                badge: 'GRADUATION #8',
+                titleAm: 'የወላጆች እና የእንግዶች ደስታ (Parents & Guests Celebration)',
+                titleEn: 'Parents & Guests Graduation Celebration',
+                descAm: 'ተማሪዎች ከቤተሰቦቻቸው ጋር የምረቃ ደስታቸውን ሲያከብሩ',
+                descEn: 'Graduates celebrating their success with families in Kemissie',
+                bgClass: 'from-violet-900 via-slate-900 to-indigo-950',
+                imgUrl: ''
+            }
+        ];
+
+        let graduationGalleryItems = JSON.parse(localStorage.getItem('vls_grad_gallery')) || defaultGraduationGallery;
+        let currentGallerySlide = 0;
+
+        function renderGallerySlider() {
+            const track = document.getElementById('gallerySliderTrack');
+            const dots = document.getElementById('galleryDotsContainer');
+            const badge = document.getElementById('galleryCounterBadge');
+            if (!track || !dots) return;
+
+            const lang = userState.lang || 'am';
+            track.innerHTML = graduationGalleryItems.map((item, idx) => `
+                <div class="min-w-full relative h-72 sm:h-96 bg-gradient-to-br ${item.bgClass} flex items-end p-6 sm:p-10 text-white">
+                    ${item.imgUrl ? `<img src="${item.imgUrl}" alt="${item.titleEn}" class="absolute inset-0 w-full h-full object-cover opacity-75">` : ''}
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-transparent"></div>
+                    <div class="relative z-10 max-w-2xl space-y-2">
+                        <span class="inline-block px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-xs font-black">${item.badge}</span>
+                        <h3 class="text-xl sm:text-3xl font-black">${lang === 'am' ? item.titleAm : item.titleEn}</h3>
+                        <p class="text-xs sm:text-sm text-slate-200">${lang === 'am' ? item.descAm : item.descEn}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            dots.innerHTML = graduationGalleryItems.map((_, idx) => `
+                <button onclick="goToGallerySlide(${idx})" class="h-2.5 rounded-full transition-all ${idx === currentGallerySlide ? 'w-8 bg-indigo-600' : 'w-2.5 bg-slate-300 dark:bg-slate-700'}"></button>
+            `).join('');
+
+            track.style.transform = `translateX(-${currentGallerySlide * 100}%)`;
+            if (badge) badge.textContent = `${currentGallerySlide + 1} / ${graduationGalleryItems.length}`;
+        }
+
+        function moveGallerySlide(step) {
+            const total = graduationGalleryItems.length;
+            currentGallerySlide = (currentGallerySlide + step + total) % total;
+            renderGallerySlider();
+        }
+
+        function goToGallerySlide(idx) {
+            currentGallerySlide = idx;
+            renderGallerySlider();
+        }
+
+        function handleAdminGalleryUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const slotIdx = parseInt(document.getElementById('adminGallerySlotSelect').value, 10);
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                graduationGalleryItems[slotIdx].imgUrl = ev.target.result;
+                localStorage.setItem('vls_grad_gallery', JSON.stringify(graduationGalleryItems));
+                currentGallerySlide = slotIdx;
+                renderGallerySlider();
+                showToast(`📸 Slide #${slotIdx + 1} የምረቃ ፎቶ ተቀይሯል!`);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetGalleryPhotos() {
+            graduationGalleryItems = JSON.parse(JSON.stringify(defaultGraduationGallery));
+            localStorage.removeItem('vls_grad_gallery');
+            renderGallerySlider();
+            showToast('🔄 የምረቃ ፎቶዎች ወደ መጀመሪያው ተመልሰዋል።');
+        }
+
+        // Unified Current Active Students Gallery (No Shift Division)
+        const defaultActiveStudentsPhotos = [
+            { captionAm: 'የክፍል ውስጥ የንግግር ልምምድ', captionEn: 'Classroom Speaking Practice', bg: 'from-emerald-800 to-teal-950', imgUrl: '' },
+            { captionAm: 'የቡድን ውይይት እና ጥያቄና መልስ', captionEn: 'Group Discussion & Q&A', bg: 'from-indigo-800 to-blue-950', imgUrl: '' },
+            { captionAm: 'የቃላት እና ሰዋሰው ልምምድ', captionEn: 'Vocabulary & Grammar Session', bg: 'from-purple-800 to-indigo-950', imgUrl: '' },
+            { captionAm: 'በመምህር መሀመድ አብዱ ገለፃ ወቅት', captionEn: 'Lecture with Teacher Mohammed Abdu', bg: 'from-slate-800 to-slate-950', imgUrl: '' }
+        ];
+
+        let activeStudentsPhotos = JSON.parse(localStorage.getItem('vls_active_photos')) || defaultActiveStudentsPhotos;
+
+        function renderActiveStudentsGallery() {
+            const grid = document.getElementById('activeStudentsPhotoGrid');
+            if (!grid) return;
+            const lang = userState.lang || 'am';
+            grid.innerHTML = activeStudentsPhotos.map((p, idx) => `
+                <div class="relative h-56 rounded-2xl overflow-hidden bg-gradient-to-br ${p.bg} border border-slate-200 dark:border-slate-800 shadow-md flex items-end p-4 text-white">
+                    ${p.imgUrl ? `<img src="${p.imgUrl}" alt="Active Students" class="absolute inset-0 w-full h-full object-cover opacity-80">` : ''}
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/25 to-transparent"></div>
+                    <div class="relative z-10">
+                        <span class="inline-block px-2.5 py-0.5 rounded-full bg-emerald-500 text-slate-950 text-[10px] font-black mb-1">● Active Students</span>
+                        <h4 class="font-extrabold text-sm">${lang === 'am' ? p.captionAm : (p.captionEn || p.captionAm)}</h4>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function handleAdminActiveStudentPhotoUpload(e) {
+            e.preventDefault();
+            const caption = document.getElementById('activePhotoCaption').value.trim();
+            const file = document.getElementById('activePhotoFileInput').files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                activeStudentsPhotos.unshift({
+                    captionAm: caption,
+                    captionEn: caption,
+                    bg: 'from-indigo-800 to-slate-950',
+                    imgUrl: ev.target.result
+                });
+                localStorage.setItem('vls_active_photos', JSON.stringify(activeStudentsPhotos));
+                e.target.reset();
+                renderActiveStudentsGallery();
+                showToast('📸 አዲስ የተማሪዎች ፎቶ ተጭኗል!');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetActiveStudentsPhotos() {
+            activeStudentsPhotos = JSON.parse(JSON.stringify(defaultActiveStudentsPhotos));
+            localStorage.removeItem('vls_active_photos');
+            renderActiveStudentsGallery();
+            showToast('🔄 የተማሪዎች ፎቶዎች ዳግም ተጀምረዋል።');
+        }
+
+        // ==========================================
+        // 7. INITIALIZE ON PAGE LOAD
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            if (userState.dark) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('themeBtn').textContent = '☀️';
+            }
+            applyTranslations();
+            updateAdminPendingBadge();
+            updateStudentSessionUI();
+            renderGallerySlider();
+            renderActiveStudentsGallery();
+            setInterval(() => moveGallerySlide(1), 6000);
+        });
+    </script>
+</body>
+</html>
